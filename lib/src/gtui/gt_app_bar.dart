@@ -14,6 +14,7 @@ class GTAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Color backButtonColor;
   final List<Widget> actions;
   final double elevation;
+  final Color backgroundColor;
   @override
   final Size preferredSize;
   GTAppBar(
@@ -25,7 +26,9 @@ class GTAppBar extends StatefulWidget implements PreferredSizeWidget {
       this.statusBarStyleLightInitially,
       this.customLeading,
       this.backButtonColor,
-      this.actions,this.elevation})
+      this.actions,
+      this.elevation,
+      this.backgroundColor})
       : preferredSize = Size.fromHeight(GTConfigurationTemplate.kToolbarHeight),
         super();
   @override
@@ -51,17 +54,19 @@ class _GTAppBarState extends State<GTAppBar> {
           (widget.backgroundImageName != null
               ? GTImage(
                   widget.backgroundImageName,
-                  height: topPadding+GTConfigurationTemplate.kToolbarHeight,
+                  height: topPadding + GTConfigurationTemplate.kToolbarHeight,
                 )
               : null),
       brightness: widget.statusBarStyleLightInitially ?? GTConfigurationTemplate.statusBarStyleLightInitially,
       leading: widget.customLeading ??
-          (canPop?BackButton(
-            color: widget.backButtonColor ?? GTConfigurationTemplate.navBarTintColor,
-          ):null),
+          (canPop
+              ? BackButton(
+                  color: widget.backButtonColor ?? GTConfigurationTemplate.navBarTintColor,
+                )
+              : null),
       actions: widget.actions,
-      backgroundColor: GTConfigurationTemplate.navBarBarTintColor,
-      elevation: widget.elevation??1,
+      backgroundColor: widget.backgroundColor ?? GTConfigurationTemplate.navBarBarTintColor,
+      elevation: widget.elevation ?? 1,
     );
   }
 }

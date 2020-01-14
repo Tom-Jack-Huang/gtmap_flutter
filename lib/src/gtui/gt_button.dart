@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../gt_configuration_template.dart';
 
 class GTButton extends StatefulWidget {
   final ValueChanged<GTButton> onPressed;
