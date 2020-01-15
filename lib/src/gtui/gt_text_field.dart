@@ -18,12 +18,14 @@ class GTTextField extends StatefulWidget {
   final bool showClearButton;
   final EdgeInsetsGeometry contentPadding; //调整文本方位
   final ValueChanged<String> onChanged;
+  final ValueChanged<String> onSubmitted;
   final int maxLength;
   final int maxLines;
   final Color cursorColor;
   final Color borderColor;
   final double borderWidth;
   final double borderRadius;
+  final TextInputAction textInputAction;
   GTTextField(
       {this.text,
       this.width,
@@ -43,7 +45,8 @@ class GTTextField extends StatefulWidget {
       this.cursorColor,
       this.borderColor,
       this.borderWidth,
-      this.borderRadius})
+      this.borderRadius,
+      this.onSubmitted,this.textInputAction})
       : super();
   @override
   _GTTextFieldState createState() => _GTTextFieldState();
@@ -64,7 +67,8 @@ class _GTTextFieldState extends State<GTTextField> {
       height: widget.height ?? 40,
       padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
       decoration: BoxDecoration(
-          border: Border.all(color: widget.borderColor ?? GTConfigurationTemplate.mainColor, width: widget.borderWidth ?? 0.5),
+          border: Border.all(
+              color: widget.borderColor ?? GTConfigurationTemplate.mainColor, width: widget.borderWidth ?? 0.5),
           borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius ?? 5.0))),
       child: TextField(
         controller: TextEditingController(text: _text),
@@ -104,6 +108,12 @@ class _GTTextFieldState extends State<GTTextField> {
             widget.onChanged(text);
           }
         },
+        onSubmitted: (text) {
+          if (widget.onSubmitted != null) {
+            widget.onSubmitted(text);
+          }
+        },
+        textInputAction: widget.textInputAction,
       ),
     );
   }
