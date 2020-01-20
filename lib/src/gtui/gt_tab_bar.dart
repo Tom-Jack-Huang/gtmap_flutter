@@ -14,6 +14,7 @@ class GTTabBar extends StatefulWidget {
   final Color unselectedIconColor;
   final Color backgroundColor;
   final ValueChanged<int> onTap;
+  final double titlePositionAdjustment;
   GTTabBar(
       {Key key,
       @required this.items,
@@ -26,7 +27,7 @@ class GTTabBar extends StatefulWidget {
       this.onTap,
       this.selectedIconColor,
       this.unselectedIconColor,
-      this.backgroundColor})
+      this.backgroundColor,this.titlePositionAdjustment})
       : super(key: key);
 
   @override
@@ -44,7 +45,7 @@ class _GTTabBarState extends State<GTTabBar> {
           icon: Icon(IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
           activeIcon: Icon(IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
           title: Container(
-            margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
+            margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment??2, 0, 0),
             child: Text(item['title']),
           )));
     }
