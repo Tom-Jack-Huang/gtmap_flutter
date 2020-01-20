@@ -25,7 +25,8 @@ class GTTabBar extends StatefulWidget {
       this.unselectedItemColor,
       this.onTap,
       this.selectedIconColor,
-      this.unselectedIconColor,this.backgroundColor})
+      this.unselectedIconColor,
+      this.backgroundColor})
       : super(key: key);
 
   @override
@@ -40,10 +41,8 @@ class _GTTabBarState extends State<GTTabBar> {
     super.initState();
     for (Map item in widget.items) {
       _myTab.add(BottomNavigationBarItem(
-          icon: Icon(
-              IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
-          activeIcon: Icon(
-              IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
+          icon: Icon(IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
+          activeIcon: Icon(IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
           title: Container(
             margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
             child: Text(item['title']),
@@ -59,15 +58,13 @@ class _GTTabBarState extends State<GTTabBar> {
       child: BottomNavigationBar(
         items: _myTab,
         type: widget.type ?? BottomNavigationBarType.fixed,
-        backgroundColor: widget.backgroundColor??GTConfigurationTemplate.tabBarBarTintColor,
+        backgroundColor: widget.backgroundColor ?? GTConfigurationTemplate.tabBarBarTintColor,
         selectedItemColor: widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected,
         unselectedItemColor: widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor,
-        selectedIconTheme: IconThemeData(
-            color: widget.selectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected,
-            size: widget.iconSize ?? 24),
-        unselectedIconTheme: IconThemeData(
-            color: widget.unselectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColor,
-            size: widget.iconSize ?? 24),
+        selectedIconTheme:
+            IconThemeData(color: widget.selectedIconColor ?? widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected, size: widget.iconSize ?? 24),
+        unselectedIconTheme:
+            IconThemeData(color: widget.unselectedIconColor ?? widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor, size: widget.iconSize ?? 24),
         selectedLabelStyle: TextStyle(
           fontSize: widget.selectedFontSize ?? 12,
         ),
