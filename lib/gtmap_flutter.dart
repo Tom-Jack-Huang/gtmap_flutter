@@ -13,4 +13,6 @@ export 'src/gtui/gt_slider.dart';
 export 'src/gtui/gt_switch.dart';
 export 'src/gtui/gt_text.dart';
 export 'src/gtui/gt_text_field.dart';
+export 'src/gtui/gt_adjustment_tab_bar.dart';
+export 'src/gtui/gt_tab_bar.dart';
 export 'src/utils/gt_util.dart';
