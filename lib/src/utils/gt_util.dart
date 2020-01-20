@@ -13,5 +13,7 @@ class GTUtils {
 
     return new Color(int.parse(s.substring(1, 7), radix: 16) + 0xFF000000);
   }
-
+  static int getIconFontFromString(String s) {
+    return int.parse(s.replaceAll('&#', '0').replaceAll(';', ''));
+  }
 }

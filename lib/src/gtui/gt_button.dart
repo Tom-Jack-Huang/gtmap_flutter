@@ -9,7 +9,8 @@ class GTButton extends StatefulWidget {
   final bool enabled;
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
-  GTButton({this.onPressed, this.backgroundColor, this.child, this.width, this.height, this.enabled = true,this.padding,this.margin}) : super();
+  final Color highlightColor;
+  GTButton({this.onPressed, this.backgroundColor, this.child, this.width, this.height, this.enabled = true,this.padding,this.margin,this.highlightColor}) : super();
   @override
   _GTButtonState createState() => _GTButtonState();
 }
@@ -29,7 +30,7 @@ class _GTButtonState extends State<GTButton> {
       padding: widget.padding,
       child: FlatButton(
         splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
+        highlightColor: widget.highlightColor?? Colors.transparent,
         color: widget.backgroundColor,
         onPressed: () {
           if (widget.enabled && widget.onPressed!=null) {

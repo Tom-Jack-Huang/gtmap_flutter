@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../gt_configuration_template.dart';
+import '../utils/gt_util.dart';
 class GTIcon extends StatefulWidget {
   final String codePoint;
   final String fontFamily;
@@ -15,8 +16,8 @@ class _GTIconState extends State<GTIcon> {
   @override
   Widget build(BuildContext context) {
     return Icon(
-      IconData(int.parse(widget.codePoint.replaceAll('&#', '0').replaceAll(';', '')), fontFamily: widget.fontFamily ?? 'IconFont'),
-      size: widget.size ?? 16,
+      IconData(GTUtils.getIconFontFromString(widget.codePoint), fontFamily: widget.fontFamily ?? GTConfigurationTemplate.fontFamily),
+      size: widget.size ?? GTConfigurationTemplate.iconSize,
       color: widget.color??GTConfigurationTemplate.mainColor,
     );
   }
