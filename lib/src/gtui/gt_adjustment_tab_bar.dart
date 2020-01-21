@@ -85,8 +85,8 @@ class _GTAdjustmentTabBatState extends State<GTAdjustmentTabBat> {
                   item['icon'],
                   size: widget.iconSize ?? 24,
                   color: _index == (i < _centerIndex ? i : i + 1)
-                      ? (widget.selectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
-                      : (widget.unselectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
+                      ? (widget.selectedIconColor ?? widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
+                      : (widget.unselectedIconColor ?? widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
                 ),
                 Text(
                   item['title'],
@@ -121,8 +121,8 @@ class _GTAdjustmentTabBatState extends State<GTAdjustmentTabBat> {
                           widget.centerIcon,
                           size: widget.centerSize ?? GTConfigurationTemplate.iconSize,
                           color: _index == _centerIndex
-                              ? (widget.selectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
-                              : (widget.unselectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
+                              ? (widget.selectedIconColor ?? widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
+                              : (widget.unselectedIconColor ?? widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
                         )
                       : GTImage(
                           widget.centerImage,
@@ -131,7 +131,7 @@ class _GTAdjustmentTabBatState extends State<GTAdjustmentTabBat> {
                           fit: BoxFit.fill,
                         ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment??0, 0, 0),
+                    margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment ?? 0, 0, 0),
                     child: Text(
                       widget.centerTitle ?? '',
                       style: TextStyle(
@@ -151,7 +151,7 @@ class _GTAdjustmentTabBatState extends State<GTAdjustmentTabBat> {
   Widget build(BuildContext context) {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding+0.5,
+      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding + 0.5,
       decoration: BoxDecoration(
           color: widget.backgroundColor ?? GTConfigurationTemplate.tabBarBarTintColor,
           border: Border(top: BorderSide(color: widget.tabBarShadowImageColor ?? GTConfigurationTemplate.tabBarShadowImageColor, width: 0.5))),

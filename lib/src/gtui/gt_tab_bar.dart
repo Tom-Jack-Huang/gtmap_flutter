@@ -71,8 +71,8 @@ class _GTTabBarState extends State<GTTabBar> {
                   item['icon'],
                   size: widget.iconSize ?? 24,
                   color: _index == i
-                      ? (widget.selectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
-                      : (widget.unselectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
+                      ? (widget.selectedIconColor ?? widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
+                      : (widget.unselectedIconColor ?? widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment ?? 0, 0, 0),
