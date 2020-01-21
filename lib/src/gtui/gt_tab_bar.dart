@@ -96,7 +96,7 @@ class _GTTabBarState extends State<GTTabBar> {
   Widget build(BuildContext context) {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding,
+      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding+0.5,
       decoration: BoxDecoration(
           color: widget.backgroundColor ?? GTConfigurationTemplate.tabBarBarTintColor,
           border: Border(top: BorderSide(color: widget.tabBarShadowImageColor ?? GTConfigurationTemplate.tabBarShadowImageColor, width: 0.5))),
