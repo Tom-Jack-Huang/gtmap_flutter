@@ -68,7 +68,7 @@ class _GTAdjustmentTabBatState extends State<GTAdjustmentTabBat> {
     for (int i = 0; i < widget.items.length; i++) {
       Map item = widget.items[i];
       _myTabs.add(Positioned(
-          bottom: 0,
+          top: 0,
           left: i < _centerIndex ? (width / (widget.items.length + 1) * i) : (width / (widget.items.length + 1) * (i + 1)),
           child: GTButton(
             onPressed: (btn) {

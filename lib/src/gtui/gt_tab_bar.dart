@@ -54,7 +54,7 @@ class _GTTabBarState extends State<GTTabBar> {
     for (int i = 0; i < widget.items.length; i++) {
       Map item = widget.items[i];
       _myTabs.add(Positioned(
-          bottom: 0,
+          top: 0,
           left: (width / (widget.items.length) * i),
           child: GTButton(
             onPressed: (btn) {
