@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'gt_button.dart';
+import 'gt_icon.dart';
+import 'gt_image.dart';
 import '../gt_configuration_template.dart';
-import '../utils/gt_util.dart';
 
 class GTTabBar extends StatefulWidget {
-  final List<Map> items; //数据格式为[{'title':'','icon':''}]
+  final List items; //数据格式为[{'title':'','icon':''}]
+  final ValueChanged<int> onTap;
   final double iconSize;
-  final BottomNavigationBarType type;
   final double selectedFontSize;
   final double unselectedFontSize;
   final Color selectedItemColor;
@@ -13,13 +15,12 @@ class GTTabBar extends StatefulWidget {
   final Color selectedIconColor;
   final Color unselectedIconColor;
   final Color backgroundColor;
-  final ValueChanged<int> onTap;
+  final Color tabBarShadowImageColor;
   final double titlePositionAdjustment;
   GTTabBar(
       {Key key,
       @required this.items,
       this.iconSize,
-      this.type,
       this.selectedFontSize,
       this.unselectedFontSize,
       this.selectedItemColor,
@@ -27,7 +28,9 @@ class GTTabBar extends StatefulWidget {
       this.onTap,
       this.selectedIconColor,
       this.unselectedIconColor,
-      this.backgroundColor,this.titlePositionAdjustment})
+      this.backgroundColor,
+      this.tabBarShadowImageColor,
+      this.titlePositionAdjustment})
       : super(key: key);
 
   @override
@@ -35,50 +38,79 @@ class GTTabBar extends StatefulWidget {
 }
 
 class _GTTabBarState extends State<GTTabBar> {
-  List<BottomNavigationBarItem> _myTab = [];
-  int _index = 0;
+  List<Widget> _myTabs;
+  int _index;
   @override
   void initState() {
     super.initState();
-    for (Map item in widget.items) {
-      _myTab.add(BottomNavigationBarItem(
-          icon: Icon(IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
-          activeIcon: Icon(IconData(GTUtils.getIconFontFromString(item['icon']), fontFamily: GTConfigurationTemplate.fontFamily)),
-          title: Container(
-            margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment??2, 0, 0),
-            child: Text(item['title']),
+    _index = 0;
+    _myTabs = [];
+  }
+
+  getViews(BuildContext context) {
+    _myTabs?.clear();
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+    for (int i = 0; i < widget.items.length; i++) {
+      Map item = widget.items[i];
+      _myTabs.add(Positioned(
+          bottom: 0,
+          left: (width / (widget.items.length) * i),
+          child: GTButton(
+            onPressed: (btn) {
+              setState(() {
+                _index = i;
+              });
+              if (widget.onTap != null) {
+                widget.onTap(i);
+              }
+            },
+            child: Column(
+              children: <Widget>[
+                GTIcon(
+                  item['icon'],
+                  size: widget.iconSize ?? 24,
+                  color: _index == i
+                      ? (widget.selectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
+                      : (widget.unselectedIconColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment ?? 0, 0, 0),
+                  child: Text(
+                    item['title'],
+                    style: TextStyle(
+                        color: _index == i
+                            ? (widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
+                            : (widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
+                        fontSize: _index == i ? (widget.selectedFontSize ?? 12) : (widget.unselectedFontSize ?? 12)),
+                  ),
+                )
+              ],
+            ),
           )));
     }
+    return _myTabs;
   }
 
   @override
   Widget build(BuildContext context) {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      height: 49.0 + bottomPadding,
-      child: BottomNavigationBar(
-        items: _myTab,
-        type: widget.type ?? BottomNavigationBarType.fixed,
-        backgroundColor: widget.backgroundColor ?? GTConfigurationTemplate.tabBarBarTintColor,
-        selectedItemColor: widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected,
-        unselectedItemColor: widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor,
-        selectedIconTheme:
-            IconThemeData(color: widget.selectedIconColor ?? widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected, size: widget.iconSize ?? 24),
-        unselectedIconTheme:
-            IconThemeData(color: widget.unselectedIconColor ?? widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor, size: widget.iconSize ?? 24),
-        selectedLabelStyle: TextStyle(
-          fontSize: widget.selectedFontSize ?? 12,
-        ),
-        unselectedLabelStyle: TextStyle(fontSize: widget.unselectedFontSize ?? 12),
-        currentIndex: _index,
-        onTap: (index) {
-          setState(() {
-            _index = index;
-          });
-          if (widget.onTap != null) {
-            widget.onTap(index);
-          }
-        },
+      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding,
+      decoration: BoxDecoration(
+          color: widget.backgroundColor ?? GTConfigurationTemplate.tabBarBarTintColor,
+          border: Border(top: BorderSide(color: widget.tabBarShadowImageColor ?? GTConfigurationTemplate.tabBarShadowImageColor, width: 0.5))),
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: GTConfigurationTemplate.kTabBarHeight,
+            width: double.infinity,
+            child: Stack(
+              overflow: Overflow.visible,
+              children: getViews(context),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -22,6 +22,7 @@ class GTAdjustmentTabBat extends StatefulWidget {
   final Color backgroundColor;
   final Color tabBarShadowImageColor;
   final double centerImageSize;
+  final double titlePositionAdjustment;
   GTAdjustmentTabBat(
       {Key key,
       @required this.items,
@@ -40,7 +41,8 @@ class GTAdjustmentTabBat extends StatefulWidget {
       this.centerImage,
       this.backgroundColor,
       this.tabBarShadowImageColor,
-      this.centerImageSize})
+      this.centerImageSize,
+      this.titlePositionAdjustment})
       : super(key: key);
 
   @override
@@ -128,13 +130,16 @@ class _GTAdjustmentTabBatState extends State<GTAdjustmentTabBat> {
                           height: widget.centerImageSize ?? 49,
                           fit: BoxFit.fill,
                         ),
-                  Text(
-                    widget.centerTitle ?? '',
-                    style: TextStyle(
-                        color: _index == _centerIndex
-                            ? (widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
-                            : (widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
-                        fontSize: _index == _centerIndex ? (widget.selectedFontSize ?? 12) : (widget.unselectedFontSize ?? 12)),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment??0, 0, 0),
+                    child: Text(
+                      widget.centerTitle ?? '',
+                      style: TextStyle(
+                          color: _index == _centerIndex
+                              ? (widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
+                              : (widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
+                          fontSize: _index == _centerIndex ? (widget.selectedFontSize ?? 12) : (widget.unselectedFontSize ?? 12)),
+                    ),
                   )
                 ],
               ),
@@ -146,14 +151,14 @@ class _GTAdjustmentTabBatState extends State<GTAdjustmentTabBat> {
   Widget build(BuildContext context) {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      height: 49.0 + bottomPadding,
+      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding,
       decoration: BoxDecoration(
           color: widget.backgroundColor ?? GTConfigurationTemplate.tabBarBarTintColor,
           border: Border(top: BorderSide(color: widget.tabBarShadowImageColor ?? GTConfigurationTemplate.tabBarShadowImageColor, width: 0.5))),
       child: Column(
         children: <Widget>[
           Container(
-            height: 49.0,
+            height: GTConfigurationTemplate.kTabBarHeight,
             width: double.infinity,
             child: Stack(
               overflow: Overflow.visible,

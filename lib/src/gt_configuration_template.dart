@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'utils/gt_util.dart';
 class GTConfigurationTemplate {
   static double kToolbarHeight = 44.0;
+  static double kTabBarHeight = 49.0;
   static Brightness statusBarStyleLightInitially = Brightness.dark;
   static String fontFamily = 'IconFont';
   static double iconSize = 16.0;
