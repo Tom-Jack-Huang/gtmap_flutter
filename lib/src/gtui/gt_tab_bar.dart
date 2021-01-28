@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'gt_button.dart';
-import 'gt_icon.dart';
 import 'gt_image.dart';
 import '../gt_configuration_template.dart';
 
 class GTTabBar extends StatefulWidget {
-  final List items; //数据格式为[{'title':'','icon':''}]
+  final List items; //数据格式为[{'title':'','icon':'','sel_icon':''}]
   final ValueChanged<int> onTap;
   final double iconSize;
   final double selectedFontSize;
@@ -67,22 +66,26 @@ class _GTTabBarState extends State<GTTabBar> {
             },
             child: Column(
               children: <Widget>[
-                GTIcon(
-                  item['icon'],
-                  size: widget.iconSize ?? 24,
-                  color: _index == i
-                      ? (widget.selectedIconColor ?? widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
-                      : (widget.unselectedIconColor ?? widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
+                GTImage(
+                  _index == i ? item['sel_icon'] : item['icon'],
+                  width: 24,
+                  height: 24,
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, widget.titlePositionAdjustment ?? 0, 0, 0),
+                  margin: EdgeInsets.fromLTRB(
+                      0, widget.titlePositionAdjustment ?? 0, 0, 0),
                   child: Text(
                     item['title'],
                     style: TextStyle(
                         color: _index == i
-                            ? (widget.selectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColorSelected)
-                            : (widget.unselectedItemColor ?? GTConfigurationTemplate.tabBarItemTitleColor),
-                        fontSize: _index == i ? (widget.selectedFontSize ?? 12) : (widget.unselectedFontSize ?? 12)),
+                            ? (widget.selectedItemColor ??
+                                GTConfigurationTemplate
+                                    .tabBarItemTitleColorSelected)
+                            : (widget.unselectedItemColor ??
+                                GTConfigurationTemplate.tabBarItemTitleColor),
+                        fontSize: _index == i
+                            ? (widget.selectedFontSize ?? 12)
+                            : (widget.unselectedFontSize ?? 12)),
                   ),
                 )
               ],
@@ -96,10 +99,15 @@ class _GTTabBarState extends State<GTTabBar> {
   Widget build(BuildContext context) {
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding+0.5,
+      height: GTConfigurationTemplate.kTabBarHeight + bottomPadding + 0.5,
       decoration: BoxDecoration(
-          color: widget.backgroundColor ?? GTConfigurationTemplate.tabBarBarTintColor,
-          border: Border(top: BorderSide(color: widget.tabBarShadowImageColor ?? GTConfigurationTemplate.tabBarShadowImageColor, width: 0.5))),
+          color: widget.backgroundColor ??
+              GTConfigurationTemplate.tabBarBarTintColor,
+          border: Border(
+              top: BorderSide(
+                  color: widget.tabBarShadowImageColor ??
+                      GTConfigurationTemplate.tabBarShadowImageColor,
+                  width: 0.5))),
       child: Column(
         children: <Widget>[
           Container(
