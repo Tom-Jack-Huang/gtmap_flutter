@@ -55,7 +55,9 @@ class _GTTabBarState extends State<GTTabBar> {
       _myTabs.add(Positioned(
           top: 0,
           left: (width / (widget.items.length) * i),
+          width: width / widget.items.length,
           child: GTButton(
+            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
             onPressed: (btn) {
               setState(() {
                 _index = i;

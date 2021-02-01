@@ -82,7 +82,7 @@ class _GTTextFieldState extends State<GTTextField> {
                   )
                 : null,
             hintText: widget.placeholder,
-            hintStyle: TextStyle(color: GTUtils.hexToColor(widget.placeholderColor ?? '#c4c8d0')),
+            hintStyle: TextStyle(color:widget.placeholderColor ?? GTUtils.hexToColor('#c4c8d0')),
             border: InputBorder.none,
             contentPadding: widget.contentPadding ?? EdgeInsets.fromLTRB(-5, 5, 0, 0),
             suffixIcon: widget.showClearButton
