@@ -25,7 +25,9 @@ class GTTextField extends StatefulWidget {
   final Color borderColor;
   final double borderWidth;
   final double borderRadius;
+  final bool obscureText;
   final TextInputAction textInputAction;
+final TextInputType keyboardType;
   GTTextField(
       {this.text,
       this.width,
@@ -46,14 +48,20 @@ class GTTextField extends StatefulWidget {
       this.borderColor,
       this.borderWidth,
       this.borderRadius,
-      this.onSubmitted,this.textInputAction})
+      this.obscureText,
+      this.onSubmitted,
+      this.textInputAction,
+        this.keyboardType
+      })
       : super();
+
   @override
   _GTTextFieldState createState() => _GTTextFieldState();
 }
 
 class _GTTextFieldState extends State<GTTextField> {
   String _text;
+
   @override
   void initState() {
     super.initState();
@@ -68,11 +76,16 @@ class _GTTextFieldState extends State<GTTextField> {
       padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
       decoration: BoxDecoration(
           border: Border.all(
-              color: widget.borderColor ?? GTConfigurationTemplate.mainColor, width: widget.borderWidth ?? 0.5),
-          borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius ?? 5.0))),
+              color: widget.borderColor ?? GTConfigurationTemplate.mainColor,
+              width: widget.borderWidth ?? 0.5),
+          borderRadius:
+              BorderRadius.all(Radius.circular(widget.borderRadius ?? 5.0))),
       child: TextField(
         controller: TextEditingController(text: _text),
-        style: TextStyle(color: widget.textColor ?? GTConfigurationTemplate.textColor, fontSize: widget.fontSize ?? 14),
+        obscureText: widget.obscureText ?? false,
+        style: TextStyle(
+            color: widget.textColor ?? GTConfigurationTemplate.textColor,
+            fontSize: widget.fontSize ?? 14),
         decoration: InputDecoration(
             icon: widget.iconName != null
                 ? GTIcon(
@@ -82,9 +95,12 @@ class _GTTextFieldState extends State<GTTextField> {
                   )
                 : null,
             hintText: widget.placeholder,
-            hintStyle: TextStyle(color:widget.placeholderColor ?? GTUtils.hexToColor('#c4c8d0')),
+            hintStyle: TextStyle(
+                color:
+                    widget.placeholderColor ?? GTUtils.hexToColor('#c4c8d0')),
             border: InputBorder.none,
-            contentPadding: widget.contentPadding ?? EdgeInsets.fromLTRB(-5, 5, 0, 0),
+            contentPadding:
+                widget.contentPadding ?? EdgeInsets.fromLTRB(-5, 5, 0, 0),
             suffixIcon: widget.showClearButton
                 ? GTButton(
                     child: GTIcon(
@@ -114,6 +130,7 @@ class _GTTextFieldState extends State<GTTextField> {
           }
         },
         textInputAction: widget.textInputAction,
+        keyboardType: widget.keyboardType ?? TextInputType.text,
       ),
     );
   }
